@@ -8,15 +8,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const metaRes = await fetch(`../blog/${id}/meta.json`);
-        const meta = await metaRes.json();
+        const [metaRes, mdRes] = await Promise.all([
+            fetch(`../blog/${id}/meta.json`),
+            fetch(`../blog/${id}/blog.md`),
+        ]);
+        const [meta, mdText] = await Promise.all([
+            metaRes.json(),
+            mdRes.text(),
+        ]);
 
         document.getElementById('blog-title').textContent = meta.title;
         document.getElementById('blog-date').textContent = meta.date;
         document.title = `${meta.title} - Murse Fun Research`;
-
-        const mdRes = await fetch(`../blog/${id}/blog.md`);
-        const mdText = await mdRes.text();
 
         const renderer = new marked.Renderer();
         const defaultImage = renderer.image.bind(renderer);
