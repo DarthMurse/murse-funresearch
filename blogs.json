@@ -1,0 +1,5 @@
+[
+    {"id": 1, "title": "Exploring Fourier Transforms in Image Processing", "date": "2026-03-15", "cover": "cover.png"},
+    {"id": 2, "title": "Building a Ray Tracer from Scratch", "date": "2026-03-20", "cover": "cover.png"},
+    {"id": 3, "title": "Understanding Attention Mechanisms in Transformers", "date": "2026-03-26", "cover": "cover.png"}
+]
