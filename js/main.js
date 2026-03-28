@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         card.href = `html/blog.html?id=${blog.id}`;
 
         const coverExt = await findCover(blog.id);
-        const coverSrc = coverExt ? `blog/${blog.id}/cover.${coverExt}` : '';
+        const coverSrc = coverExt ? `blog/${blog.id}/cover.${coverExt}?t=${Date.now()}` : '';
 
         card.innerHTML = `
             ${coverSrc ? `<img class="blog-card-cover" src="${coverSrc}" alt="${blog.title}">` : ''}

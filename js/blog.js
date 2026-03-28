@@ -33,6 +33,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         document.getElementById('blog-content').innerHTML = marked.parse(mdText);
+
+        renderMathInElement(document.getElementById('blog-content'), {
+            delimiters: [
+                { left: '$$', right: '$$', display: true },
+                { left: '$', right: '$', display: false },
+            ],
+            throwOnError: false,
+        });
     } catch (err) {
         document.getElementById('blog-content').innerHTML =
             '<p>Failed to load blog post.</p>';
