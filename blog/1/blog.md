@@ -1,42 +1,15 @@
-# Exploring Fourier Transforms in Image Processing
+# Welcome to My Blog
 
-The Fourier Transform is one of the most powerful tools in signal and image processing. It allows us to decompose an image into its frequency components, revealing patterns invisible in the spatial domain.
+The main idea of this blog is to share some small projects that I do in my leissure time, when I have the chance to get away from the rigorous research environment, and just do whatever I want to do, even if the project may seem meaningless to somebody else. In my conception, this blog site will be mainly focused on something that is interesting but not innovative enough to be published as a research work, in other word, "engineering projects". In the era of generative AI, especially the new emerging AI agents, it is a lot more easier to implement your ideas, and I will also try to use these AI tools in my latter projects in this blog.
 
-## What is a Fourier Transform?
+Before starting this blog, I spent most of my leissure time on video games and streaming video platforms. I've been doing the same thing for many many years, but one day I suddenly realized that most of the games and videos that I played or watched won't survive even 1 month in my memory, and that they only leave a large blank space in my memory, Idecided that I should do something that I will remember through my life. So that's the beginning of this blog series. Besides, I really like computers and programming, I think they are the most intricate things that humans have ever built, and I do hope that you will have a similar feeling after reading my blogs. So now let the first project "building the blog site" begin!
 
-At its core, the Fourier Transform converts a signal from the **time domain** (or spatial domain for images) into the **frequency domain**. For a 2D image, the Discrete Fourier Transform (DFT) is defined as:
+## Building the Blog Website
+There are a thousand ways of building a personal blog in these days, I've tried to deploy a personal blog on Github Pages, with a template from github. It is good and free. But this time I decide to take a somewhat old-fashioned approach, which is setting up the website from a blank Ubuntu server. By the way, I do not have much experience in building a website and setting up a web server, so I asked Gemini for advice. The AI suggested me buying a remote server on [Digital Ocean](https://www.digitalocean.com/) and a domain name on [Cloudfare](https://www.cloudflare.com/), and so I did what it says. After buying the server, they will give you a root account and a public IP, you can access the server through `ssh`. Then you need to bind your IP to your domain name on Cloudfare, so that others can access your website through a easy-to-remember name. (Mine is 'murse-funresearch.com').
 
-$$F(u, v) = \sum_{x=0}^{M-1} \sum_{y=0}^{N-1} f(x, y) \cdot e^{-j2\pi(ux/M + vy/N)}$$
+To set up the website, I installed nginx and made a configuration under the guidance from Gemini (LLM is so powerful!), and wrote a simple html page (also produced by Gemini) to test if I can connect to the site. Cloudfare gave me a 521 error at first, which I had no idea what on earth it is, so I asked Gemini again and it told me to change a setting in the encrpytion mode. So I tried, and it worked! The only thing left to do is design and implement the webpages of the blog.
 
-## Applications in Image Processing
+To write the website, I decide to use Claude Code with Claude Opus 4.6, the best coding model at this time. I list my design principles and file structures in `CLAUDE.md` (you can find it [here](https://github.com/DarthMurse/murse-funresearch/blob/main/CLAUDE.md)) and told CLAUDE to work on it. The first version came in about 5 minutes, and is pretty good at the first glance, except that the math formulas in the markdown files were not rendered properly, and the cover image did not change after I switch the image in the local file system. Then I told these problems to CLAUDE, and it solved these two problems in the second round, which is really impressive.
 
-### 1. Frequency Filtering
-By transforming an image to the frequency domain, we can easily remove high-frequency noise (low-pass filter) or enhance edges (high-pass filter).
+You can find the source code for my blog site at my [github repo](https://github.com/DarthMurse/murse-funresearch/tree/main). It is amazing how AI build most parts of the website without my diving into the details. The full process takes about 3.5 hours, to build a personal website from nothing, which really shows the power of AI.
 
-### 2. Image Compression
-JPEG compression uses the closely related Discrete Cosine Transform (DCT) to represent image blocks efficiently.
-
-### 3. Pattern Detection
-Periodic patterns in images show up as distinct peaks in the frequency domain, making them easy to identify and remove.
-
-## A Simple Example
-
-Here's a Python snippet that computes the 2D FFT of an image:
-
-```python
-import numpy as np
-import cv2
-
-img = cv2.imread('sample.jpg', cv2.IMREAD_GRAYSCALE)
-f_transform = np.fft.fft2(img)
-f_shift = np.fft.fftshift(f_transform)
-magnitude = 20 * np.log(np.abs(f_shift))
-```
-
-## Key Takeaways
-
-- The Fourier Transform bridges spatial and frequency domains
-- Low frequencies represent smooth regions; high frequencies represent edges
-- FFT makes computation practical even for large images
-
-> "The Fourier Transform is perhaps the most important algorithm in applied mathematics." — Gilbert Strang
