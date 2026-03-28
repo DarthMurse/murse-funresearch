@@ -11,10 +11,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         card.className = 'blog-card';
         card.href = `html/blog.html?id=${blog.id}`;
 
-        const coverSrc = blog.cover ? `blog/${blog.id}/${blog.cover}${blog.v ? '?v=' + blog.v : ''}` : '';
-
         card.innerHTML = `
-            ${coverSrc ? `<img class="blog-card-cover" src="${coverSrc}" alt="${blog.title}" loading="lazy">` : ''}
+            ${blog.cover ? `<img class="blog-card-cover" src="${blog.cover}" alt="${blog.title}">` : ''}
             <div class="blog-card-info">
                 <div class="blog-card-title">${blog.title}</div>
                 <div class="blog-card-date">${blog.date}</div>
