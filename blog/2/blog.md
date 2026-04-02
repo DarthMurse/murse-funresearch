@@ -9,5 +9,15 @@ Let's dive into an open source LLM to start our exploration. Qwen3.5-4B is the o
 As we can see, tokens that have similar meanings do fall into the same category to some extent, with some common groups such as capitalized English words, two-character Chinese words, English subwords, programming subwords, etc. 
 
 ## Actication Distributions
-Next let's move to the activation distributions of the model. I randomly sampled 256 token sequences from wikitext-2, a popular dataset for language modeling, each with a length of 2048 tokens. I want to know the variance of each activation channel and the variance for each token (position) in each Transformer block.
+Next let's move to the activation distributions of the model. I randomly sampled 256 token sequences from wikitext-2, a popular dataset for language modeling, each with a length of 2048 tokens. I want to know the variance of each activation channel and the variance for each token (position) in each Transformer block. 
+
+![Variance of each activation channel](figures/channel_outlier_by_layer.png)
+
+As we can see from the graph above, the Qwen model has some channels that have significant larger variations than other channels, a phenonmenon widely observed in different LLMs, named outlier channels. Though small in number, these outlier channels play a critical role in the performance of LLMs, as proved by various studies, but also make quantization of activations in LLM difficult. 
+
+After looking at the channel variations of the activations, let us look at the token variations.
+
+![Variance of each activation token](figures/token_outlier_by_layer.png)
+
+Generally, the norm of the token activation is quite uniform across different positions (compared to channel activations), but the first few tokens exhibit exceptionally large or small norms at some layers, especially for the first token. Some per-token static activation quantization method (meaning the input activation at each linear layer has the same static scaling factor, I will explain later) utilize this phenonmenon and append some special tokens to the beginning of input sequence, precompute their KV cache, and use the same scaling factor for the activation of the rest tokens, thus avoiding the outlier tokens to increase quantization performance.
 
